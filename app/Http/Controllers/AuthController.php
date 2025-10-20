@@ -20,11 +20,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function showLogoutPage()
-    {
-        return view('auth.logout');
-    }
-
     // Register new member
     public function register(Request $request)
     {
