@@ -6,7 +6,7 @@ use App\Models\Option;
 
 class OptionRepository
 {
-    // =================== Question-specific options ===================
+    
     public function createOptions($question, $options, $correctIndex)
     {
         foreach ($options as $i => $opt) {
@@ -22,7 +22,6 @@ class OptionRepository
         $question->options()->delete();
     }
 
-    // =================== Standalone option CRUD ===================
     public function allWithQuestions()
     {
         return Option::with('question', 'question.quiz')->get();

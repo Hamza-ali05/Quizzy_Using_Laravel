@@ -7,6 +7,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\QuizAttemptController;
 
 // =====================
 // Home
@@ -77,6 +78,16 @@ Route::middleware(['auth'])->prefix('student')->group(function () {
     Route::get('/quizzes', [QuizController::class, 'index'])->name('quizzes.index');
 });
 
+//Routes for testing
+Route::resource('attempts', QuizAttemptController::class);
+Route::middleware(['auth'])->group(function () {
+    // Resource route for all quiz actions
+    Route::resource('quizzes', QuizController::class);
+
+    // Additional custom routes (if used in your controller)
+    Route::post('quizzes/{quiz}/submit', [QuizController::class, 'submit'])->name('quizzes.submit');
+    Route::get('quizzes/{quiz}/result', [QuizController::class, 'result'])->name('quizzes.result');
+});
 
 
 
