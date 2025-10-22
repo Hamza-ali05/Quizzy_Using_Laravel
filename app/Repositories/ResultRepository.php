@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Repositories;
-
 use App\Models\Result;
 use App\Models\Attempt;
 
 class ResultRepository
 {
-    // ================= Existing method =================
     public function storeResult($quizId, $studentId, $questionId, $optionId, $correct)
     {
         return Result::create([
@@ -18,8 +16,6 @@ class ResultRepository
             'correct'     => $correct
         ]);
     }
-
-    // ================= New CRUD/Admin/Student Methods =================
 
     // Get all results for quizzes created by an admin
     public function allForAdmin($adminId)
@@ -48,10 +44,7 @@ class ResultRepository
         foreach ($quiz->questions as $question) {
             $chosen = $answers["question_{$question->id}"] ?? null;
 
-            $isCorrect = $question->options()
-                                  ->where('id', $chosen)
-                                  ->where('correct_option', 1)
-                                  ->exists();
+            $isCorrect = $question->options()->where('id', $chosen)->where('correct_option', 1)->exists();
 
             if ($isCorrect) $score++;
 

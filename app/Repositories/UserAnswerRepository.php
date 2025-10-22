@@ -1,36 +1,22 @@
 <?php
 
 namespace App\Repositories;
-
 use App\Models\UserAnswer;
-
 class UserAnswerRepository
 {
-    /**
-     * Get all user answers with related attempt, question, and option.
-     */
     public function all()
     {
         return UserAnswer::with(['attempt', 'question', 'option'])->get();
     }
 
-    /**
-     * Find a single answer by ID with relations.
-     */
     public function findById($id)
     {
         return UserAnswer::with(['attempt', 'question', 'option'])->findOrFail($id);
     }
 
-    /**
-     * Get all answers for a specific attempt and quiz, keyed by question_id.
-     */
     public function getAnswersForAttempt($attemptId, $quizId)
     {
-        return UserAnswer::where('attempt_id', $attemptId)
-                         ->where('quiz_id', $quizId)
-                         ->get()
-                         ->keyBy('question_id');
+        return UserAnswer::where('attempt_id', $attemptId)->where('quiz_id', $quizId)->get()->keyBy('question_id');
     }
 
     /**

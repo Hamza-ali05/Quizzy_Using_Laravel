@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Repositories;
-
 use App\Models\Quiz;
-
 class QuizRepository
 {
     public function allWithCreator()

@@ -1,16 +1,12 @@
 <?php
 
 namespace App\Repositories;
-
 use App\Models\Question;
-
 class QuestionRepository
 {
     public function allByAdmin($adminId)
     {
-        return Question::with('options', 'quiz')
-                       ->whereHas('quiz', fn($q) => $q->where('created_by', $adminId))
-                       ->get();
+        return Question::with('options', 'quiz')->whereHas('quiz', fn($q) => $q->where('created_by', $adminId))->get();
     }
 
     public function findById($id)

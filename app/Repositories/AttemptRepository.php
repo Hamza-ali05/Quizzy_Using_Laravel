@@ -1,20 +1,14 @@
 <?php
 
 namespace App\Repositories;
-
 use App\Models\Attempt;
-
 class AttemptRepository
 {
-    // =================== Existing methods ===================
 
     // Find active attempt for a user & quiz
     public function findActive($userId, $quizId)
     {
-        return Attempt::where('member_id', $userId)
-                      ->where('quiz_id', $quizId)
-                      ->whereNull('finished_at')
-                      ->first();
+        return Attempt::where('member_id', $userId)->where('quiz_id', $quizId)->whereNull('finished_at')->first();
     }
 
     // Finalize an attempt (marks and finished_at)
@@ -27,13 +21,11 @@ class AttemptRepository
         return $attempt;
     }
 
-    // =================== New CRUD / Admin methods ===================
 
     // Get all attempts for quizzes created by an admin
     public function allForAdmin($adminId)
     {
-        return Attempt::with(['member', 'quiz'])
-            ->whereHas('quiz', function($q) use ($adminId) {
+        return Attempt::with(['member', 'quiz'])->whereHas('quiz', function($q) use ($adminId) {
                 $q->where('created_by', $adminId);
             })
             ->get();
